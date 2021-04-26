@@ -7,12 +7,15 @@ var specialCharacters = ['@', '%', '+', '\\', '/', "'", '!', '#', '$', '^', '?',
 
 // contains prompts - length, choices of char arrays 
 function passOptions() {
+  // let user know what is the criteria for creating the password
   alert('The criteria for generating your password is choosing at least one of the following options: lowercase, uppercase, numerical and/or special characters');
   // user prompt for password length
-  var length = parseInt(prompt('Please enter a number between 8 and 128 for your password length'));
+  var length = parseInt(
+    prompt('Please enter a number between 8 and 128 for your password length'));
   // user input validation
-  if (!length === true) {
-    alert('Please enter Length of your password using NUMBERS from 8 to 128 ONLY!');
+  if (isNaN(length) === true) {
+    prompt('Please enter Length of your password using NUMBERS from 8 to 128 ONLY!');
+    return;
   }
   if (length < 8 || length > 128) {
     prompt('Please enter Length of your password using NUMBERS from 8 to 128 ONLY!');
@@ -23,6 +26,7 @@ function passOptions() {
   hasUppercase = confirm('Do you want to include uppercase characters?');
   hasNumerical = confirm('Do you want to include numerical characters?');
   hasSpecialCharacters = confirm('Do you want to include special characters?');
+
   // alert user if they do not chose at least one type of characters
   if (!hasLowercase && !hasUppercase && !hasNumerical && !hasSpecialCharacters) {
     alert('You must choose at least one of the offered options!');
@@ -30,51 +34,61 @@ function passOptions() {
   }
   // worked with tutor on this
   // store user input into object
-  var passChoices = {
+  var passwordOptions = {
     length: length,
     hasLowercase: hasLowercase,
     hasUppercase: hasUppercase,
     hasNumerical: hasNumerical,
     hasSpecialCharacters: hasSpecialCharacters
   };
-  return passChoices;
+  return passwordOptions;
 }
-//get an array to randomiezedPassword element
-function generatePasswordRandomness(arr) {
+//get an array to randomized Password element
+function generateRandPass(arr) {
   var randomIndex = Math.floor(Math.random() * arr.length);
-  var randomizedPassword = arr[randomIndex];
-  return randomizedPassword;
+  var randomElement = arr[randomIndex];
+  return randomElement;
 }
 //use user input to generate password
 function generatePassword() {
-  var choices = passOptions();
+  var options = passOptions();
   var finalPassword = [];
   //user choice chars
-  var chosenChars = [];
-  //create array out of userChars
   var userChoices = [];
+  //create array out of userChars
+  var guranteedChoices = [];
 
   //if user chose options(use all four array options), use them in array of userChoices (push)
-  if (choices.hasLowercase) {
-    chosenChars = chosenChars.concat(lowercase);
-    userChoices.push(generatePasswordRandomness(lowercase));
+  if (options.hasLowercase) {
+    userChoices = userChoices.concat(lowercase);
+    guranteedChoices.push(generateRandPass(lowercase));
   }
-  if (choices.hasUppercase) {
-    chosenChars = chosenChars.concat(uppercase);
-    userChoices.push(generatePasswordRandomness(uppercase));
+  if (options.hasUppercase) {
+    userChoices = userChoices.concat(uppercase);
+    guranteedChoices.push(generateRandPass(uppercase));
   }
-  if (choices.hasNumeric) {
-    chosenChars = chosenChars.concat(numerical);
-    userChoices.push(generatePasswordRandomness(numerical));
+  if (options.hasNumeric) {
+    userChoices = userChoices.concat(numerical);
+    guranteedChoices.push(generateRandPass(numerical));
   }
-  if (choices.hasSpecialCharacters) {
-    chosenChars = chosenChars.concat(specialCharacters);
-    userChoices.push(generatePasswordRandomness(specialCharacters));
+  if (options.hasSpecialCharacters) {
+    userChoices = userChoices.concat(specialCharacters);
+    guranteedChoices.push(generateRandPass(specialCharacters));
   }
 
   //need a for loop of user inputs to prompts
-
+  for (var i = 0; i < options.length; i++) {
+    var userChoices = generateRandPass(userChoices);
+    finalPassword.push(userChoices);
+  }
+  // add at lease one char from eaach of user Choices character options
+  for (var i = 0; i < guranteedChoices.length; i++) {
+    finalPassword[i] = guranteedChoices[i];
+  }
+  //create a string out of finalPassword
+  return finalPassword.join("");
 }
+
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
