@@ -21,15 +21,60 @@ function passOptions() {
   //prompt user for char choices
   hasLowercase = confirm('Do you want to include lowercase characters?');
   hasUppercase = confirm('Do you want to include uppercase characters?');
-  hasNumeric = confirm('Do you want to include numerical characters?');
+  hasNumerical = confirm('Do you want to include numerical characters?');
   hasSpecialCharacters = confirm('Do you want to include special characters?');
   // alert user if they do not chose at least one type of characters
-  if (!hasLowercase && !hasUppercase && !hasNumeric && !hasSpecialCharacters) {
+  if (!hasLowercase && !hasUppercase && !hasNumerical && !hasSpecialCharacters) {
     alert('You must choose at least one of the offered options!');
     return;
   }
+  // worked with tutor on this
+  // store user input into object
+  var passChoices = {
+    length: length,
+    hasLowercase: hasLowercase,
+    hasUppercase: hasUppercase,
+    hasNumerical: hasNumerical,
+    hasSpecialCharacters: hasSpecialCharacters
+  };
+  return passChoices;
 }
+//get an array to randomiezedPassword element
+function generatePasswordRandomness(arr) {
+  var randomIndex = Math.floor(Math.random() * arr.length);
+  var randomizedPassword = arr[randomIndex];
+  return randomizedPassword;
+}
+//use user input to generate password
+function generatePassword() {
+  var choices = passOptions();
+  var finalPassword = [];
+  //user choice chars
+  var chosenChars = [];
+  //create array out of userChars
+  var userChoices = [];
 
+  //if user chose options(use all four array options), use them in array of userChoices (push)
+  if (choices.hasLowercase) {
+    chosenChars = chosenChars.concat(lowercase);
+    userChoices.push(generatePasswordRandomness(lowercase));
+  }
+  if (choices.hasUppercase) {
+    chosenChars = chosenChars.concat(uppercase);
+    userChoices.push(generatePasswordRandomness(uppercase));
+  }
+  if (choices.hasNumeric) {
+    chosenChars = chosenChars.concat(numerical);
+    userChoices.push(generatePasswordRandomness(numerical));
+  }
+  if (choices.hasSpecialCharacters) {
+    chosenChars = chosenChars.concat(specialCharacters);
+    userChoices.push(generatePasswordRandomness(specialCharacters));
+  }
+
+  //need a for loop of user inputs to prompts
+
+}
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
@@ -39,7 +84,6 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
