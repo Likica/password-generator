@@ -67,7 +67,7 @@ With simple click the new password will be generated. User can copy this passwor
 
 ### **Credits**
 ###### [Back to Table of Contents](#Table-of-Contents)
-* UW BootCamp TAs, instructors, tutors, AskCBS and all other that helped!
+* UW BootCamp TAs, instructors, tutors, AskBCS and all other that helped!
 
 ### **Contributing**
 ###### [Back to Table of Contents](#Table-of-Contents)
